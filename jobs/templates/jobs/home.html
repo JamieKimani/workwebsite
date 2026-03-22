@@ -32,7 +32,7 @@
                 <p class="card-text">{{ job.description }}</p>
                 <p><strong>County:</strong> {{ job.county }}</p>
 
-                <!-- Poster Info -->
+                
                 <div class="d-flex align-items-center mt-2">
                     <img src="{% if job.posted_by.profile.profile_pic %}{{ job.posted_by.profile.profile_pic.url }}{% else %}/media/default.png{% endif %}"
                          alt="{{ job.posted_by.username }}"
