@@ -1,15 +1,168 @@
 {% extends 'jobs/base.html' %}
 {% block content %}
 
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white text-center rounded-top-4 py-4">
+                    <h2 class="mb-0">
+                        <i class="fas fa-briefcase me-2"></i>Post a New Job
+                    </h2>
+                    <p class="mb-0 opacity-75 mt-2">Fill out the details to post your job opportunity</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4" role="alert">
+                                <i class="fas fa-{{ 'check-circle'|yesno:'check-circle,exclamation-triangle' }} me-2"></i>{{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
-<div class="container mt-4">
-    <h2 class="mb-4">Post a Job</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Post Job</button>
-    </form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-heading me-1 text-primary"></i>Job Title
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="fas fa-briefcase text-muted"></i>
+                                    </span>
+                                    {{ form.title }}
+                                </div>
+                                {% if form.title.errors %}
+                                    <div class="text-danger small mt-1">{{ form.title.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.company.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-building me-1 text-success"></i>Company
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="fas fa-building text-muted"></i>
+                                    </span>
+                                    {{ form.company }}
+                                </div>
+                                {% if form.company.errors %}
+                                    <div class="text-danger small mt-1">{{ form.company.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-align-left me-1 text-info"></i>Description
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">
+                                    <i class="fas fa-file-alt text-muted"></i>
+                                </span>
+                                {{ form.description }}
+                            </div>
+                            {% if form.description.errors %}
+                                <div class="text-danger small mt-1">{{ form.description.errors|join:", " }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.location.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-map-marker-alt me-1 text-danger"></i>Location
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-map-marker-alt text-muted"></i>
+                                    </span>
+                                    {{ form.location }}
+                                </div>
+                                {% if form.location.errors %}
+                                    <div class="text-danger small mt-1">{{ form.location.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.salary.id_for_label }}" class="form-label fw-semibold">
+                                    <i class="fas fa-dollar-sign me-1 text-warning"></i>Salary
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">$</span>
+                                    {{ form.salary }}
+                                    <span class="input-group-text bg-light">/year</span>
+                                </div>
+                                {% if form.salary.errors %}
+                                    <div class="text-danger small mt-1">{{ form.salary.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.image.id_for_label }}" class="form-label fw-semibold">
+                                <i class="fas fa-image me-1 text-secondary"></i>Job Image
+                            </label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="text-danger small mt-1">{{ form.image.errors|join:", " }}</div>
+                            {% endif %}
+                            <div class="form-text">Upload a representative image for your job (optional)</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 fs-5">
+                                <i class="fas fa-paper-plane me-2"></i>Post Job Now
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer bg-light text-center rounded-bottom-4 py-3">
+                    <small class="text-muted">
+                        <i class="fas fa-lightbulb me-1"></i>Tips: Use clear titles & detailed descriptions to attract better candidates
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .form-control, .form-select, .form-control:focus, .form-select:focus {
+        border-radius: 0.75rem;
+        font-size: 1rem;
+    }
+    .input-group-text {
+        border-radius: 0.75rem 0 0 0.75rem;
+    }
+    .card {
+        transition: all 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.2) !important;
+    }
+    .btn-primary {
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 0.5rem 1rem rgba(13,110,253,0.3);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 1rem 2rem rgba(13,110,253,0.4) !important;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.375rem rgba(13,110,253,0.2);
+    }
+    .card-header {
+        background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 {% endblock %}
