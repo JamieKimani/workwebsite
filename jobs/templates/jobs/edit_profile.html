@@ -1,16 +1,36 @@
 {% extends 'jobs/base.html' %}
 {% block content %}
-<h2>Edit Profile</h2>
 
-<form method="POST" enctype="multipart/form-data">
+<div class="box">
+  <h2>Edit Profile</h2>
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="field">
+      <label>Bio</label>{{ form.bio }}
+    </div>
+    <div class="field">
+      <label>Profile Picture</label>{{ form.profile_pic }}
+    </div>
+    <button type="submit" class="btn">Save Changes</button>
+  </form>
+</div>
+ 
+<style>
+.box {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+.field {
+  margin-bottom: 15px;}
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
-    <label>Bio:</label><br>
-    {{ form.bio }}<br><br>
+</style>
 
-    <label>Profile Picture:</label><br>
-    {{ form.profile_pic }}<br><br>
-
-    <button type="submit">Save Changes</button>
-</form>
 {% endblock %}
